@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  description: This is an API description for test project.
+  version: "1.0.0"
+  title: Test project link API
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: link
+    description: Link handling for Test project core services
+paths:
+  /apiv1/link/process:
+    post:
+      tags:
+        - link
+      summary: Process URLs
+      description: ''
+      operationId: linksProcess
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Response'
+        '400':
+          description: Error processing provided URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '412':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    Response:
+      type: object
+      properties:
+        url:
+          type: string
+        status:
+          type: integer
